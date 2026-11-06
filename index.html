@@ -265,8 +265,8 @@ body.effects-off .arcade-crown:before,body.effects-off .arcade-crown:after,body.
  <div class="showtime-burst" id="showtimeBurst" aria-hidden="true">★ BIG WIN! ★</div>
  <div class="showtime-status" aria-hidden="true"><span class="led"></span> ★ LIGHTS • REELS • BLITZ ★ <span class="led"></span></div>
 </section>
-<section class="result" aria-live="polite" aria-atomic="true"><h2 id="headline">WELCOME TO BARDMOOR BLITZ!</h2><p id="description">Pull the red lever or press SPIN. Match three pictures, or use one Napkin Cat with two identical pictures for a wild match!</p></section>
-<div class="legend"><strong>THREE MATCHING PICTURES:</strong> Win the amount shown in the payout table below. <strong>+100:</strong> Two Brooke portraits (without a bad-luck symbol). <strong>+500:</strong> Three mixed Brooke portraits. <strong>WILD CAT:</strong> One Napkin Cat + two identical pictures pays as three of that picture. <strong>BAD LUCK:</strong> Statue in other combinations. All points are fictional.</div>
+<section class="result" aria-live="polite" aria-atomic="true"><h2 id="headline">WELCOME TO BARDMOOR BLITZ!</h2><p id="description">Pull the red lever or press SPIN. Match three pictures, or use Napkin Cats as wild symbols to complete a triple!</p></section>
+<div class="legend"><strong>THREE MATCHING PICTURES:</strong> Win the amount shown in the payout table below. <strong>+100:</strong> Two Brooke portraits (without a bad-luck symbol). <strong>+500:</strong> Three mixed Brooke portraits. <strong>WILD CAT:</strong> One Cat + two matching pictures, or two Cats + any one picture, pays as three of that picture. Three Cats pays 5,000. <strong>BAD LUCK:</strong> Statue in other combinations. All points are fictional.</div>
  <details class="gallery" open><summary>VIEW TRIPLE-MATCH PAYOUTS (BLITZ BUCKS)</summary><div class="payout-grid" id="payoutGrid"></div></details>
 <details class="gallery"><summary>VIEW ALL NINE CHARACTERS</summary><div class="faces" id="gallery"></div></details>
 <footer>Blitz Bucks are fictional arcade points with no cash value. No betting, purchases, cash prizes, or redemption. The napkin cat and statue are original photos.</footer>
@@ -415,9 +415,10 @@ function evaluate(){
  const catCount=names.filter(name=>name==='Napkin Cat').length;
  const bad=names.filter(name=>name==='Tavern Statue');
  const tripleMatch=names.every(name=>name===names[0]);
- // A single Napkin Cat is wild only when the other two pictures are identical.
+ // Cats substitute for a matching symbol: 1 cat + 2 matching, or 2 cats + 1 symbol.
+ // Three cats already count as an ordinary triple, worth 5,000 Blitz Bucks.
  const nonCats=names.filter(name=>name!=='Napkin Cat');
- const wildMatch=catCount===1 && nonCats.length===2 && nonCats[0]===nonCats[1];
+ const wildMatch=catCount>0 && catCount<3 && nonCats.every(name=>name===nonCats[0]);
  spins++;
  $('machine').classList.remove('winner','bad-luck');
  $('showtimeBurst').classList.remove('play');
@@ -425,15 +426,14 @@ function evaluate(){
  $('machine').classList.remove('cat-fire');
  $('fireballField').replaceChildren();
  if(tripleMatch || wildMatch){
-  // Three identical pictures pay normally; one Cat plus two identical pictures
-  // pays the matching picture's three-of-a-kind amount.
+  // Three identical pictures pay normally; Cat wilds complete the other matching symbol.
   const matchingName=wildMatch?nonCats[0]:names[0];
   const points=TRIPLE_PAYOUTS[matchingName];
   if(matchingName.startsWith('Brooke'))brookeWins++;
   $('machine').classList.add('winner');
   if(effectsOn)document.querySelector('.result').classList.add('bonus-result');
   $('headline').textContent=wildMatch?'NAPKIN CAT WILD — MATCH!':'TRIPLE MATCH — YOU WIN!';
-  $('description').textContent=(wildMatch?'Napkin Cat completes three '+matchingName+' pictures!':'Three '+matchingName+' pictures!')+' +'+points.toLocaleString()+' Blitz Bucks!';
+  $('description').textContent=(wildMatch?catCount+' Napkin Cat wild'+(catCount===1?'':'s')+' complete three '+matchingName+' pictures!':'Three '+matchingName+' pictures!')+' +'+points.toLocaleString()+' Blitz Bucks!';
   awardPoints(points);showBigWin(points);
   dispenseFakeCoins(points>=750?20:points>=100?12:7);
   confetti();speak(760,.25);
@@ -459,7 +459,7 @@ function evaluate(){
   if(catCount)launchCatFireballs(4);
  }else{
   $('headline').textContent='NO MATCH — PULL AGAIN!';
-  $('description').textContent=catCount?'Napkin Cat is wild only when the other two pictures match!':'Match three identical pictures or look for two Brooke portraits!';
+  $('description').textContent=catCount?'Napkin Cat wilds need all other symbols to match!':'Match three identical pictures or look for two Brooke portraits!';
   if(catCount)launchCatFireballs(4);
  }
  $('stats').textContent='Spins '+spins+' · Brooke wins '+brookeWins+' · Bad luck '+badLucks;
