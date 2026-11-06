@@ -44,7 +44,7 @@ button.secondary{font-size:.85rem;min-width:115px;color:#ffe2ad;background:linea
 .stats{text-align:center;font-size:.78rem;color:#f2ca8e;font-weight:800;margin:9px 0 0}
 .gallery{max-width:1000px;margin:20px auto 10px;border:1px solid #a1723f;border-radius:16px;background:#140c09e3;padding:13px}
 .gallery summary{text-align:center;color:#fce1a5;font-weight:900;cursor:pointer;list-style:none}.gallery summary:after{content:' ▾'}.gallery[open] summary:after{content:' ▴'}
-.faces{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:9px;margin-top:13px}.face{min-width:0;text-align:center}.face img{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:center 28%;border-radius:9px;border:2px solid #bb9159}.face span{display:block;font-size:.68rem;margin-top:3px;color:#ffe7bd;line-height:1.2}
+.payout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-top:12px}.payout-item{padding:9px 12px;border:1px solid #ae7c45;border-radius:9px;background:#291522;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.84rem}.payout-item strong{color:#afffc2;font-variant-numeric:tabular-nums;white-space:nowrap}.faces{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:9px;margin-top:13px}.face{min-width:0;text-align:center}.face img{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:center 28%;border-radius:9px;border:2px solid #bb9159}.face span{display:block;font-size:.68rem;margin-top:3px;color:#ffe7bd;line-height:1.2}
 footer{text-align:center;color:#f0dbb6;font-size:.77rem;padding:8px 10px;text-shadow:0 1px 3px #000}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}.conf{position:absolute;top:-15px;width:10px;height:17px;animation:fall 2.7s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(650deg);opacity:.05}}
 @media(max-width:800px){.lever{right:-15px;top:34%;transform:scale(.7);transform-origin:center right}.faces{grid-template-columns:repeat(5,minmax(0,1fr))}}
@@ -209,9 +209,36 @@ body.effects-off .coin-drawer.payout{box-shadow:inset 0 0 13px #000,0 7px 17px #
 body.effects-off .fireball{animation:none!important;opacity:0}
 @media(prefers-reduced-motion:reduce){.fireball{animation:none;opacity:0}}
 
+
+/* V7 showtime cabinet: cosmetic effects only; no changes to reel probabilities or points. */
+:root{--showtime-gold:#ffe3a4}
+.arcade-crown{position:relative;max-width:910px;margin:2px auto 15px;padding:14px 14px 13px;text-align:center;border:5px ridge #ffe18d;border-radius:55% 55% 18px 18px/38px 38px 18px 18px;background:radial-gradient(ellipse at 50% 15%,#8f265a,#3d1133 59%,#180b1c);box-shadow:inset 0 0 17px #000,0 0 24px #f83ab588,0 8px 20px #000a}
+.arcade-crown:before,.arcade-crown:after{content:'✦';position:absolute;top:34%;color:#fff6b6;font-size:30px;text-shadow:0 0 15px #ffdc54,0 0 28px #ffc600;animation:crownSpark 1.6s ease-in-out infinite alternate}
+.arcade-crown:before{left:6%}.arcade-crown:after{right:6%;animation-delay:.8s}
+.arcade-crown .crown-title{font:900 clamp(1.15rem,3.2vw,2.3rem) Georgia,serif;letter-spacing:.11em;color:#fff4d0;text-shadow:0 2px 0 #ac5c20,0 0 8px #ffe391,0 0 24px #fb4caa}
+.arcade-crown .crown-sub{font:900 .73rem system-ui,sans-serif;color:#a6faff;letter-spacing:.28em;margin-top:4px}
+.showtime-ticker{max-width:900px;overflow:hidden;white-space:nowrap;margin:8px auto 16px;border:2px solid #e5b75f;border-radius:7px;background:#0b0910;color:#fef0ae;box-shadow:inset 0 0 12px #000,0 0 9px #fdbd4e66}
+.showtime-ticker span{display:block;width:max-content;min-width:100%;padding:7px 12px;font-size:.77rem;font-weight:950;letter-spacing:.18em;text-align:center;text-shadow:0 0 8px #f9ae55}
+.machine .cabinet-led{position:absolute;top:85px;bottom:85px;width:8px;border-radius:12px;background:repeating-linear-gradient(to bottom,#e4fff7 0 10px,#fa62b9 10px 20px,#ffe980 20px 30px,#55dfff 30px 40px);box-shadow:0 0 8px #fff,0 0 20px #fc60b2;animation:cabinetLeds 1.1s steps(4,end) infinite;pointer-events:none}
+.machine .cabinet-led.left{left:0}.machine .cabinet-led.right{right:0;animation-delay:.45s}
+.showtime-status{display:flex;justify-content:center;align-items:center;gap:12px;margin:14px auto 2px;color:#b9faff;font:900 .8rem system-ui,sans-serif;letter-spacing:.15em;text-align:center}
+.showtime-status .led{width:12px;height:12px;flex:none;border-radius:50%;background:#73ffcd;box-shadow:0 0 8px #86ffea,0 0 18px #75ffc8;animation:ledPulse 1.3s ease-in-out infinite alternate}
+.showtime-status .led:last-child{animation-delay:.65s}
+.showtime-burst{position:absolute;z-index:16;left:50%;top:38%;transform:translate(-50%,-50%) scale(.6);width:max-content;max-width:88%;padding:12px 28px;border:4px ridge #ffe99c;border-radius:16px;color:#fff8bd;background:linear-gradient(130deg,#7b1b6d,#32104d,#a25717);text-shadow:0 3px 5px #3a0a20,0 0 15px #fff1a4;font:900 clamp(1.3rem,3.8vw,2.5rem) Georgia,serif;letter-spacing:.08em;text-align:center;pointer-events:none;opacity:0;box-shadow:0 0 26px #fd65ba,0 0 55px #ffc54e}
+.showtime-burst.play{animation:showtimePop 2s ease-out forwards}
+.machine.winner .cabinet-led{animation-duration:.2s;filter:brightness(1.6)}
+@keyframes crownSpark{to{opacity:.4;transform:scale(.75);filter:hue-rotate(60deg)}}
+@keyframes cabinetLeds{to{filter:hue-rotate(130deg) brightness(1.5)}}
+@keyframes ledPulse{to{opacity:.35;box-shadow:0 0 3px #80fff6}}
+@keyframes showtimePop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-4deg)}14%,60%{opacity:1;transform:translate(-50%,-50%) scale(1.06) rotate(0)}100%{opacity:0;transform:translate(-50%,-85%) scale(1.12)}}
+body.effects-off .arcade-crown:before,body.effects-off .arcade-crown:after,body.effects-off .cabinet-led,body.effects-off .showtime-status .led{animation:none!important}
+@media(max-width:520px){.arcade-crown{margin:1px auto 9px;padding:11px 10px}.arcade-crown:before,.arcade-crown:after{font-size:17px}.arcade-crown .crown-sub{font-size:.57rem;letter-spacing:.13em}.showtime-ticker{margin-bottom:9px}.showtime-ticker span{font-size:.57rem;letter-spacing:.05em}.machine .cabinet-led{width:4px}.showtime-burst{padding:8px 12px;border-width:2px}}
+@media(prefers-reduced-motion:reduce){.arcade-crown:before,.arcade-crown:after,.cabinet-led,.showtime-status .led{animation:none!important}.showtime-burst.play{animation:none;opacity:1;transform:translate(-50%,-50%)}}
+
 </style></head>
 <body><div id="confetti" aria-hidden="true"></div><div id="globalFireballs" aria-hidden="true"></div><main>
-<header><div class="kicker">BARDMOOR • TAVERN ARCADE</div><h1>BARDMOOR BLITZ</h1><p>Pull the big red lever • Brooke matches score • Beware the cat and statue</p></header>
+<header><div class="kicker">BARDMOOR • TAVERN ARCADE</div><h1>BARDMOOR BLITZ</h1><p>Pull the big red lever • Match three pictures to win Blitz Bucks!</p></header>
+<div class="arcade-crown" aria-label="Bardmoor Blitz deluxe arcade cabinet"><div class="crown-title">✦ BLITZ DELUXE ✦</div><div class="crown-sub">NEON ARCADE SHOWTIME</div></div>
 <div class="neon-sign" aria-hidden="true"><span>★ BROOKE BONUS LIGHTS ★</span></div>
 <section class="scoreboard" aria-label="Arcade scoreboard">
  <div class="score-display"><span class="score-label">BLITZ BUCKS</span><strong id="blitzScore" aria-live="polite">0</strong><span class="score-note">JUST FOR FUN • NO CASH VALUE</span></div>
@@ -219,9 +246,11 @@ body.effects-off .fireball{animation:none!important;opacity:0}
  <div class="score-stat"><span>BROOKE WINS</span><strong id="scoreWins">0</strong></div>
  <button class="secondary reset-score" type="button" id="resetScore">↺ RESET</button>
 </section>
+<div class="showtime-ticker" aria-label="Arcade game highlights"><span>★ NINE ORIGINAL REEL PICTURES ★ MATCH THREE FOR BLITZ BUCKS ★ BIG LIGHT SHOW ON WINS ★ JUST FOR FUN ★</span></div>
 <section class="machine" id="machine" aria-label="Three-column spinning picture machine">
+ <span class="cabinet-led left" aria-hidden="true"></span><span class="cabinet-led right" aria-hidden="true"></span>
  <div class="bulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
- <div class="marquee">★ PULL THE LEVER! ★ <span class="mini-pay">2 BROOKES = +100 • 3 BROOKES = +500</span></div>
+ <div class="marquee">★ PULL THE LEVER! ★ <span class="mini-pay">2 BROOKES = +100 • 3 MIXED BROOKES = +500</span></div>
  <div class="faceplate"><div class="reels" id="reels"></div><div class="payline" aria-hidden="true"></div></div>
  <button class="lever" id="lever" aria-label="Pull the red slot-machine-style arcade lever to spin the character wheels"><span class="rod"></span><span class="knob"></span><span class="lever-tip">PULL ↓</span></button>
  <div class="controls"><button id="spin">⟳ SPIN THE REELS</button><button class="secondary" id="sound" aria-pressed="false">🔇 SOUND OFF</button><button class="secondary" id="effects" aria-pressed="true">✨ LIGHTS ON</button></div>
@@ -233,10 +262,13 @@ body.effects-off .fireball{animation:none!important;opacity:0}
   <div class="coin-caption">FAKE ARCADE COINS • NO CASH VALUE</div>
  </div>
  <div class="fireball-field" id="fireballField" aria-hidden="true"></div>
+ <div class="showtime-burst" id="showtimeBurst" aria-hidden="true">★ BIG WIN! ★</div>
+ <div class="showtime-status" aria-hidden="true"><span class="led"></span> ★ LIGHTS • REELS • BLITZ ★ <span class="led"></span></div>
 </section>
-<section class="result" aria-live="polite" aria-atomic="true"><h2 id="headline">WELCOME TO BARDMOOR BLITZ!</h2><p id="description">Pull the red lever or press SPIN. Two or more Brooke faces are a win. Cat or statue on the center line means bad luck!</p></section>
-<div class="legend"><strong>+100 BLITZ BUCKS:</strong> Two Brooke portraits. <strong>+500 BLITZ BUCKS:</strong> Three Brooke portraits. <strong>BAD LUCK:</strong> Napkin Cat or Tavern Statue overrides matches. These are arcade points only.</div>
-<details class="gallery"><summary>VIEW ALL NINE REEL SYMBOLS</summary><div class="faces" id="gallery"></div></details>
+<section class="result" aria-live="polite" aria-atomic="true"><h2 id="headline">WELCOME TO BARDMOOR BLITZ!</h2><p id="description">Pull the red lever or press SPIN. Match three pictures, or use one Napkin Cat with two identical pictures for a wild match!</p></section>
+<div class="legend"><strong>THREE MATCHING PICTURES:</strong> Win the amount shown in the payout table below. <strong>+100:</strong> Two Brooke portraits (without a bad-luck symbol). <strong>+500:</strong> Three mixed Brooke portraits. <strong>WILD CAT:</strong> One Napkin Cat + two identical pictures pays as three of that picture. <strong>BAD LUCK:</strong> Statue in other combinations. All points are fictional.</div>
+ <details class="gallery" open><summary>VIEW TRIPLE-MATCH PAYOUTS (BLITZ BUCKS)</summary><div class="payout-grid" id="payoutGrid"></div></details>
+<details class="gallery"><summary>VIEW ALL NINE CHARACTERS</summary><div class="faces" id="gallery"></div></details>
 <footer>Blitz Bucks are fictional arcade points with no cash value. No betting, purchases, cash prizes, or redemption. The napkin cat and statue are original photos.</footer>
 </main>
 <dialog id="spinReminder" class="spin-reminder" aria-labelledby="spinReminderTitle" aria-describedby="spinReminderMessage">
@@ -247,6 +279,8 @@ body.effects-off .fireball{animation:none!important;opacity:0}
 <script>
 'use strict';
 
+// Ten equally likely reel positions: two positions use the Napkin Cat picture.
+// Gallery and paytable display each character once.
 const characters=[
   {name:'Alicia',image:'alicia.webp'},
   {name:'Brooke (USA)',image:'usa.webp'},
@@ -256,8 +290,25 @@ const characters=[
   {name:'Brooke (green)',image:'brooke.webp'},
   {name:'Sam',image:'sam.webp'},
   {name:'Napkin Cat',image:'napkincat.jpg'},
+  {name:'Napkin Cat',image:'napkincat.jpg'}, // Second wild position raises Cat frequency
   {name:'Tavern Statue',image:'statue.jpg'}
 ];
+// EASY PAYOUT SETTINGS: change these nine numbers for three identical pictures.
+// Scores are fictional Blitz Bucks; these values do not affect reel odds.
+const TRIPLE_PAYOUTS = Object.freeze({
+ 'Alicia': 750,
+ 'Brooke (USA)': 200,
+ 'Brooke (green)': 750,
+ 'Jeff': 100,
+ 'Kim': 100,
+ 'Lindsay': 100,
+ 'Sam': 100,
+ 'Napkin Cat': 5000,
+ 'Tavern Statue': 15
+});
+const BROOKE_TWO_BONUS = 100;
+const BROOKE_MIXED_THREE_BONUS = 500;
+
 const $=id=>document.getElementById(id);
 const n=characters.length;
 const reels=[];
@@ -291,7 +342,8 @@ function renderRestingReel(r){
  r.track.style.transition='none';r.track.style.transform='translateY(0px)';
  fill(r.track,[prev,r.center,next]);
 }
-function gallery(){for(const c of characters){const box=document.createElement('div');box.className='face';const img=document.createElement('img');img.src=c.image;img.alt=c.name;img.loading='lazy';const caption=document.createElement('span');caption.textContent=c.name;box.append(img,caption);$('gallery').append(box);}}
+function payoutGallery(){for(const c of characters.filter((c,i)=>characters.findIndex(x=>x.name===c.name)===i)){const item=document.createElement('div');item.className='payout-item';const name=document.createElement('span');name.textContent=c.name;const points=document.createElement('strong');points.textContent=TRIPLE_PAYOUTS[c.name].toLocaleString();item.append(name,points);$('payoutGrid').append(item);}}
+function gallery(){for(const c of characters.filter((c,i)=>characters.findIndex(x=>x.name===c.name)===i)){const box=document.createElement('div');box.className='face';const img=document.createElement('img');img.src=c.image;img.alt=c.name;img.loading='lazy';const caption=document.createElement('span');caption.textContent=c.name;box.append(img,caption);$('gallery').append(box);}}
 function speak(f=360,d=.1){if(!soundOn)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();const oscillator=ctx.createOscillator(),gain=ctx.createGain();oscillator.frequency.value=f;oscillator.type='triangle';gain.gain.setValueAtTime(.04,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);oscillator.connect(gain).connect(ctx.destination);oscillator.start();oscillator.stop(ctx.currentTime+d);}catch(e){}}
 function confetti(){if(!effectsOn||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const holder=$('confetti');holder.replaceChildren();const palette=['#ffe085','#f19f35','#ff7752','#ffffff'];for(let i=0;i<48;i++){const el=document.createElement('span');el.className='conf';el.style.left=Math.random()*100+'%';el.style.background=palette[i%4];el.style.animationDelay=Math.random()*.6+'s';holder.appendChild(el);}setTimeout(()=>holder.replaceChildren(),3300);}
 
@@ -346,35 +398,67 @@ function launchCatFireballs(count=4){
  setTimeout(()=>{$('machine').classList.remove('cat-fire');resultBox.classList.remove('cat-fire-result');},1350);
 }
 
+function showBigWin(points){
+ if(!effectsOn || window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ if(points<500)return;
+ const banner=$('showtimeBurst');
+ banner.textContent=points>=5000?'★ MEGA BLITZ! ★':points>=750?'★ SUPER WIN! ★':'★ BIG WIN! ★';
+ banner.classList.remove('play');void banner.offsetWidth;banner.classList.add('play');
+}
+
 function evaluate(){
  const values=reels.map(r=>r.center);
  const names=values.map(i=>characters[i].name);
  const brookes=names.filter(name=>name.startsWith('Brooke')).length;
- const bad=names.filter(name=>name==='Napkin Cat'||name==='Tavern Statue');
+ const catCount=names.filter(name=>name==='Napkin Cat').length;
+ const bad=names.filter(name=>name==='Tavern Statue');
+ const tripleMatch=names.every(name=>name===names[0]);
+ // A single Napkin Cat is wild only when the other two pictures are identical.
+ const nonCats=names.filter(name=>name!=='Napkin Cat');
+ const wildMatch=catCount===1 && nonCats.length===2 && nonCats[0]===nonCats[1];
  spins++;
  $('machine').classList.remove('winner','bad-luck');
+ $('showtimeBurst').classList.remove('play');
  document.querySelector('.result').classList.remove('bonus-result','cat-fire-result');
  $('machine').classList.remove('cat-fire');
  $('fireballField').replaceChildren();
- if(bad.length){
+ if(tripleMatch || wildMatch){
+  // Three identical pictures pay normally; one Cat plus two identical pictures
+  // pays the matching picture's three-of-a-kind amount.
+  const matchingName=wildMatch?nonCats[0]:names[0];
+  const points=TRIPLE_PAYOUTS[matchingName];
+  if(matchingName.startsWith('Brooke'))brookeWins++;
+  $('machine').classList.add('winner');
+  if(effectsOn)document.querySelector('.result').classList.add('bonus-result');
+  $('headline').textContent=wildMatch?'NAPKIN CAT WILD — MATCH!':'TRIPLE MATCH — YOU WIN!';
+  $('description').textContent=(wildMatch?'Napkin Cat completes three '+matchingName+' pictures!':'Three '+matchingName+' pictures!')+' +'+points.toLocaleString()+' Blitz Bucks!';
+  awardPoints(points);showBigWin(points);
+  dispenseFakeCoins(points>=750?20:points>=100?12:7);
+  confetti();speak(760,.25);
+  if(catCount)launchCatFireballs(6);
+ }else if(bad.length){
   badLucks++;
   $('machine').classList.add('bad-luck');
   $('headline').textContent='OH NO — BAD LUCK!';
-  $('description').textContent=(bad.includes('Napkin Cat')&&bad.includes('Tavern Statue'))?'The Cat AND the Statue landed on the line. Try another spin!':bad.includes('Napkin Cat')?'The Napkin Cat crossed your path! Better luck next spin.':'The Tavern Statue stopped your streak! Try again.';
-  if(bad.includes('Napkin Cat')) launchCatFireballs(bad.includes('Tavern Statue')?5:4);
+  $('description').textContent='The Tavern Statue interrupted this combination. Try again!';
+  if(catCount)launchCatFireballs(5);
   else speak(240,.25);
  }else if(brookes>=2){
+  // Preserve the existing two-Brooke and mixed-three-Brooke bonuses.
+  const points=brookes===3?BROOKE_MIXED_THREE_BONUS:BROOKE_TWO_BONUS;
   brookeWins++;
   $('machine').classList.add('winner');
   if(effectsOn)document.querySelector('.result').classList.add('bonus-result');
   $('headline').textContent=brookes===3?'BROOKE TRIPLE — BIG WIN!':'BROOKE MATCH — YOU WIN!';
-  $('description').textContent=brookes===3?'All three reels landed on Brooke portraits! +500 Blitz Bucks!':'Two Brooke portraits landed on the center line! +100 Blitz Bucks!';
-  awardPoints(brookes===3?500:100);
+  $('description').textContent=brookes===3?'Three Brooke portraits landed on the center line! +'+points+' Blitz Bucks!':'Two Brooke portraits landed on the center line! +'+points+' Blitz Bucks!';
+  awardPoints(points);showBigWin(points);
   dispenseFakeCoins(brookes===3?16:9);
   confetti();speak(760,.25);
+  if(catCount)launchCatFireballs(4);
  }else{
   $('headline').textContent='NO MATCH — PULL AGAIN!';
-  $('description').textContent='Look for two or more Brooke portraits. Beware the Cat and Statue!';
+  $('description').textContent=catCount?'Napkin Cat is wild only when the other two pictures match!':'Match three identical pictures or look for two Brooke portraits!';
+  if(catCount)launchCatFireballs(4);
  }
  $('stats').textContent='Spins '+spins+' · Brooke wins '+brookeWins+' · Bad luck '+badLucks;
  displayScore();
@@ -399,20 +483,20 @@ function spin(){
  $('spin').disabled=true;$('lever').disabled=true;
  $('lever').classList.add('pulled');$('machine').classList.remove('winner','bad-luck');
  $('headline').textContent='BLITZ IN MOTION!';
- $('description').textContent='Watch all nine characters roll past. The center line determines the result!';
+ $('description').textContent='Watch the characters roll past. The center line determines the result!';
  const reduced=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
  const selected=reels.map(()=>random());let remaining=3;
  reels.forEach((r,j)=>{
   const target=selected[j],start=r.center;
   if(reduced){r.center=target;renderRestingReel(r);if(--remaining===0)evaluate();return;}
-  // Build full rotating drum: each of the nine characters appears once per turn.
+  // Build full rotating drum: ten positions, with Napkin Cat appearing twice per cycle.
   // Several full turns run through the viewing window, ending on a random center.
   // The first displayed center is the same as the last finished symbol.
   const firstIndex=(start+n-1)%n;
   const turns=7+j*2;
   const currentCenterOffset=(start-firstIndex+n)%n; // always 1
   const targetCenterOffset=(target-firstIndex+n)%n;
-  // Choose a stopping row after several complete nine-picture cycles.
+  // Choose a stopping row after several complete reel cycles.
   const targetCenterRow=turns*n+targetCenterOffset;
   const finalVisibleStart=targetCenterRow-1;
   const length=finalVisibleStart+4;
@@ -446,5 +530,5 @@ $('effects').addEventListener('click',()=>{effectsOn=!effectsOn;document.body.cl
 if(!effectsOn){$('effects').textContent='✨ LIGHTS OFF';$('effects').setAttribute('aria-pressed','false');}
 $('sound').addEventListener('click',()=>{soundOn=!soundOn;$('sound').textContent=soundOn?'🔊 SOUND ON':'🔇 SOUND OFF';$('sound').setAttribute('aria-pressed',String(soundOn));speak(680,.08);});
 window.addEventListener('resize',()=>{if(!spinning)setHeight();});
-initialReels();gallery();displayScore();
+initialReels();gallery();payoutGallery();displayScore();
 </script></body></html>
